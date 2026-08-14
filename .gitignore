@@ -1,0 +1,23 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+*.tsbuildinfo
+
+# logs
+*.log
+npm-debug.log*
+
+# editor / OS
+.DS_Store
+.vscode/
+.idea/
+
+# env
+.env
+.env.*
+
+# 작업용 원본 에셋 (사용본은 src/assets/illust/에 복사됨)
+src/assets/tmp/
+artifact/
