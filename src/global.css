@@ -741,6 +741,8 @@ img {
 .review-card__quote {
   font-size: 20px;
   line-height: 1.4;
+  /* 인용문 길이가 달라도 카드 틀이 같도록 3줄 높이를 고정 확보 */
+  min-height: calc(20px * 1.4 * 3);
 }
 
 .review-card__author {
@@ -748,6 +750,8 @@ img {
   gap: 16px;
   align-items: center;
   padding-top: 8px;
+  /* 작성자 블록은 항상 카드 하단에 정렬 */
+  margin-top: auto;
 }
 
 .review-card__avatar {

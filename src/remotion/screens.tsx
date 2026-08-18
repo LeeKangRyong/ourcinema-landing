@@ -601,7 +601,7 @@ function SceneCheck() {
           ...appear(frame, fps, 50),
         }}
       >
-        ⓘ K-DST 월령 문항을 참고했어요 — 판단이 아니라 기록을 위한 질문이에요
+        ⓘ 아이의 실제 행동을 짚어보는 질문이에요 — 판단이 아니라 기록을 위한 질문이에요
       </div>
       <div
         style={{

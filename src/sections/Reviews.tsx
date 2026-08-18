@@ -4,22 +4,22 @@ import illustMascot from "../assets/illust/mascot.png";
 const MOMENTS = [
   {
     quote: "“새벽에 ‘말 늦는 아기’ 검색만 한참 했어요. 정작 병원에선 말문이 막히고요.”",
-    avatar: "맘",
+    avatar: "엄마",
     role: "16개월 아이 엄마",
   },
   {
     quote: "“진료 3분 안에 두 달치 걱정을 설명할 자신이 없어요.”",
-    avatar: "대디",
+    avatar: "아빠",
     role: "14개월 아이 아빠",
   },
   {
     quote: "“아이 사진 보내달라는 부모님 성화에, 고르다 지쳐서 결국 못 보내요.”",
-    avatar: "맘",
+    avatar: "엄마",
     role: "9개월 아이 엄마",
   },
   {
     quote: "“걱정을 꺼내면 유난이라 할까 봐, 혼자만 끙끙 앓게 돼요.”",
-    avatar: "대디",
+    avatar: "아빠",
     role: "20개월 아이 아빠",
   },
 ];

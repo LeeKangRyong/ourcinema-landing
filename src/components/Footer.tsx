@@ -48,7 +48,7 @@ export function Footer() {
         </div>
       </div>
       <div className="footer__bottom">
-        <span>© LifeX, Inc. All Rights Reserved.</span>
+        <span>© SimsimNet, Inc. All Rights Reserved.</span>
         <div className="footer__bottom-links">
           <a href="#">이용약관</a>
           <a href="#">개인정보처리방침</a>

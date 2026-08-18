@@ -18,7 +18,7 @@ const FLOW_STEPS = [
   {
     num: "2",
     title: "살펴보기",
-    desc: "K-DST 월령 문항을 참고한 질문으로 걱정을 구체화해요. 판단이 아니라 기록을 위한 질문이에요.",
+    desc: "아이의 실제 행동을 하나씩 짚는 질문으로 걱정을 구체화해요. 판단이 아니라 기록을 위한 질문이에요.",
   },
   {
     num: "3",
@@ -65,7 +65,7 @@ export function DetailCare() {
           </h2>
           <p>
             검색만 하다 끝나던 막연한 걱정을, 쌓인 기록 기반의 분석과 추천으로
-            정리해요. 병명을 판정하지 않아요 — 결론은 전문가의 영역이에요.
+            정리해요. 병명을 판정하지 않아요. 결론은 전문가의 영역이에요.
           </p>
           <ol className="flow-steps">
             {FLOW_STEPS.map((step) => (
@@ -84,7 +84,7 @@ export function DetailCare() {
             target="_blank"
             rel="noreferrer"
           >
-            🎬 걱정 살펴보기 직접 체험하기
+            🎬 직접 체험하기
           </a>
         </FadeIn>
       </div>

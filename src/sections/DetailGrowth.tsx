@@ -24,14 +24,14 @@ export function DetailGrowth() {
             공유하세요. 이렇게 쌓인 일상의 기록이, 걱정되는 순간의 가장 정확한
             근거가 돼요.
           </p>
-          <a
+          {/* 버튼 제거 자리 — 레이아웃 유지를 위한 투명 플레이스홀더 */}
+          <span
             className="pill-button"
-            href="https://ourcinema-mockup.netlify.app"
-            target="_blank"
-            rel="noreferrer"
+            style={{ visibility: "hidden" }}
+            aria-hidden="true"
           >
             일기 화면 미리 보기
-          </a>
+          </span>
         </FadeIn>
         <FadeIn className="detail__visual" delay={0.1}>
           <div className="detail__stage">
