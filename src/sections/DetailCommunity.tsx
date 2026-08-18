@@ -1,6 +1,6 @@
 import { FadeIn } from "../components/FadeIn";
 import { PhoneFrame } from "../components/PhoneFrame";
-import { CommunityScreen } from "../remotion/screens";
+import { CommunityScreen } from "../remotion/mockup";
 import iconCommunity from "../assets/icon-community.svg";
 import illustCommunity from "../assets/illust/community.png";
 

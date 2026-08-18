@@ -16,6 +16,11 @@ import mascot from "../assets/mascot.png";
 import babyBear from "../assets/photos/baby3.jpg";
 import babySleep from "../assets/photos/baby5.jpg";
 import babyFeet from "../assets/photos/baby2.jpg";
+import storeAlbum from "../assets/mockup/store-album.png";
+import storeGift from "../assets/mockup/store-gift.jpg";
+import commFood from "../assets/mockup/comm-food.jpg";
+import commPlay from "../assets/mockup/comm-play.jpg";
+import commAvatar from "../assets/mockup/comm-avatar.jpg";
 
 /* ---------------------------------------------------------------- */
 /* 레퍼런스 목업(2026-08-18 목업.html)의 실제 제품 UI를 1:1로 재현.
@@ -135,7 +140,13 @@ const NAV5 = [
   { key: "report", icon: "📄", label: "리포트" },
 ];
 
-function Nav5({ active }: { active: string }) {
+function Nav5({
+  active,
+  items = NAV5,
+}: {
+  active: string;
+  items?: typeof NAV5;
+}) {
   return (
     <div
       style={{
@@ -146,7 +157,7 @@ function Nav5({ active }: { active: string }) {
         padding: "5px 6px 12px",
       }}
     >
-      {NAV5.map((item) => {
+      {items.map((item) => {
         const on = item.key === active;
         return (
           <div
@@ -1994,6 +2005,444 @@ export function tourSceneAt(frame: number): number {
     if (frame < acc) return i;
   }
   return TOUR_SCENES.length - 1;
+}
+
+/* ---------------------------------------------------------------- */
+/* 커뮤니티·선물숍 — 피그마 레퍼런스(27:6, 27:140)를 목업 스타일로 변환.
+ * 랜딩에서 단독 노출되는 소개 화면이라 흐름 없이 등장 모션만 살짝 준다. */
+
+/** 카테고리 필터 알약 줄 */
+function PillRow({ pills, style }: { pills: string[]; style?: CSSProperties }) {
+  return (
+    <div style={{ display: "flex", gap: 7, ...style }}>
+      {pills.map((label, i) => (
+        <div
+          key={label}
+          style={{
+            padding: "7px 14px",
+            borderRadius: 20,
+            fontSize: 12.5,
+            whiteSpace: "nowrap",
+            background: i === 0 ? M.coral : M.card,
+            border: i === 0 ? `1px solid ${M.coral}` : "1px solid #E9D8CB",
+            color: i === 0 ? "#4A2314" : "#5C4E41",
+            fontWeight: i === 0 ? 700 : 500,
+          }}
+        >
+          {label}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function CommPost({
+  tag,
+  hot,
+  meta,
+  avatar,
+  title,
+  snippet,
+  likes,
+  comments,
+  liked,
+  thumb,
+  delay,
+}: {
+  tag: string;
+  hot?: boolean;
+  meta: string;
+  avatar?: string;
+  title: string;
+  snippet: string;
+  likes: number;
+  comments: number;
+  liked?: boolean;
+  thumb?: string;
+  delay: number;
+}) {
+  const { frame, fps } = useAnim();
+  return (
+    <div
+      style={{
+        display: "flex",
+        gap: 12,
+        background: M.card,
+        border: `1px solid ${M.line}`,
+        borderRadius: 18,
+        padding: 14,
+        ...appear(frame, fps, delay),
+      }}
+    >
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 7,
+            fontSize: 11,
+            color: M.sub,
+            marginBottom: 7,
+          }}
+        >
+          <span
+            style={{
+              background: hot ? "rgba(232,144,124,0.14)" : "#F3E9DC",
+              color: hot ? "#C0674C" : M.sub,
+              fontWeight: 700,
+              borderRadius: 6,
+              padding: "2px 8px",
+            }}
+          >
+            {tag}
+          </span>
+          {avatar && (
+            <img
+              src={avatar}
+              alt=""
+              style={{
+                width: 17,
+                height: 17,
+                borderRadius: "50%",
+                objectFit: "cover",
+              }}
+            />
+          )}
+          <span>{meta}</span>
+        </div>
+        <div
+          style={{
+            fontFamily: SERIF,
+            fontSize: 15,
+            fontWeight: 700,
+            letterSpacing: "-0.01em",
+            marginBottom: 4,
+          }}
+        >
+          {title}
+        </div>
+        <div
+          style={{
+            fontSize: 12,
+            color: M.sub,
+            lineHeight: 1.55,
+            marginBottom: 9,
+            display: "-webkit-box",
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: "vertical",
+            overflow: "hidden",
+          }}
+        >
+          {snippet}
+        </div>
+        <div style={{ display: "flex", gap: 12, fontSize: 11.5 }}>
+          <span
+            style={{
+              color: liked ? "#C57A5A" : M.sub,
+              fontWeight: liked ? 700 : 500,
+            }}
+          >
+            {liked ? "♥" : "♡"} {likes}
+          </span>
+          <span style={{ color: M.sub }}>💬 {comments}</span>
+        </div>
+      </div>
+      {thumb && (
+        <Photo
+          src={thumb}
+          radius={12}
+          style={{ width: 68, height: 68, flex: "none" }}
+        />
+      )}
+    </div>
+  );
+}
+
+const NAV_COMM = [
+  { key: "home", icon: "🏠", label: "홈" },
+  { key: "comm", icon: "👥", label: "커뮤니티" },
+  { key: "album", icon: "🖼", label: "앨범" },
+  { key: "set", icon: "⚙️", label: "설정" },
+];
+
+/** 커뮤니티 — 동기 부모 게시판 (랜딩 소개용, 준비 중 기능) */
+export function CommunityScreen() {
+  const { frame, fps } = useAnim();
+  const bob = Math.sin(frame / 14) * 2.5;
+  return (
+    <AbsoluteFill>
+      <Device bg={M.cream}>
+        <AppBar />
+        <div
+          style={{
+            flex: 1,
+            overflow: "hidden",
+            padding: "6px 16px 0",
+            display: "flex",
+            flexDirection: "column",
+            gap: 12,
+          }}
+        >
+          {/* 환영 배너 */}
+          <div
+            style={{
+              background: "linear-gradient(135deg, #E9DECB 0%, #E8907C 100%)",
+              borderRadius: 20,
+              padding: "20px 20px 18px",
+              color: "#FFF7F0",
+              ...appear(frame, fps, 4),
+            }}
+          >
+            <div
+              style={{
+                fontFamily: SERIF,
+                fontSize: 20,
+                fontWeight: 700,
+                lineHeight: 1.4,
+                letterSpacing: "-0.01em",
+              }}
+            >
+              혼자가 아니에요,
+              <br />
+              함께 키워요
+            </div>
+            <div style={{ fontSize: 12.5, opacity: 0.92, marginTop: 6 }}>
+              월령이 비슷한 동기 부모들과 소통해요
+            </div>
+          </div>
+
+          <PillRow
+            pills={["전체", "동기 게시판", "꿀팁 나눔"]}
+            style={appear(frame, fps, 14)}
+          />
+
+          <CommPost
+            tag="유아식"
+            hot
+            meta="맘마미아 · 2시간 전 · 조회 128"
+            title="14개월 아기 유아식 공유해요"
+            snippet="오늘 아침에 해준 단호박 퓨레 레시피입니다. 아이가 너무 잘 먹어서 뿌듯하네요."
+            likes={32}
+            comments={12}
+            thumb={commFood}
+            delay={24}
+          />
+          <CommPost
+            tag="육아질문"
+            hot
+            meta="도담아빠 · 5시간 전 · 조회 256"
+            title="걸음마 연습 꿀팁 있나요?"
+            snippet="이제 막 잡고 서기 시작했는데, 신발은 언제부터 신기는 게 좋을까요? 선배 맘들의 조언 부탁드려요."
+            likes={15}
+            comments={8}
+            thumb={commPlay}
+            delay={36}
+          />
+          <CommPost
+            tag="일상"
+            meta="초보맘 · 6시간 전 · 조회 342"
+            avatar={commAvatar}
+            title="오늘도 육아 화이팅입니다!"
+            snippet="다들 밤잠 설치셨죠? 따뜻한 커피 한 잔 드시고 오늘 하루도 힘내봐요. 💪"
+            likes={45}
+            comments={21}
+            liked
+            delay={48}
+          />
+        </div>
+
+        {/* 글쓰기 FAB */}
+        <div
+          style={{
+            position: "absolute",
+            right: 18,
+            bottom: 86,
+            width: 52,
+            height: 52,
+            borderRadius: "50%",
+            background: M.coral,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: 19,
+            boxShadow: "0 6px 16px rgba(120,62,37,0.3)",
+            transform: `translateY(${bob}px)`,
+          }}
+        >
+          ✏️
+        </div>
+        <Nav5 active="comm" items={NAV_COMM} />
+      </Device>
+    </AbsoluteFill>
+  );
+}
+
+/* ---------------------------------------------------------------- */
+
+const NAV_GIFT = [
+  { key: "diary", icon: "📖", label: "일기" },
+  { key: "album", icon: "🖼", label: "앨범" },
+  { key: "gift", icon: "🎁", label: "선물" },
+  { key: "cal", icon: "📅", label: "캘린더" },
+  { key: "report", icon: "📄", label: "리포트" },
+];
+
+function GiftProduct({
+  src,
+  title,
+  sub,
+  price,
+  delay,
+}: {
+  src: string;
+  title: string;
+  sub: string;
+  price: string;
+  delay: number;
+}) {
+  const { frame, fps } = useAnim();
+  return (
+    <div
+      style={{
+        background: M.card,
+        border: `1px solid ${M.line}`,
+        borderRadius: 20,
+        padding: 12,
+        ...appear(frame, fps, delay),
+      }}
+    >
+      <Photo src={src} height={108} radius={14} />
+      <div
+        style={{
+          fontFamily: SERIF,
+          fontSize: 15,
+          fontWeight: 700,
+          letterSpacing: "-0.01em",
+          margin: "9px 4px 0",
+        }}
+      >
+        {title}
+      </div>
+      <div style={{ fontSize: 11.5, color: M.sub, margin: "2px 4px 0" }}>
+        {sub}
+      </div>
+      <div
+        style={{
+          fontSize: 14,
+          fontWeight: 800,
+          color: "#5C4E41",
+          margin: "6px 4px 1px",
+        }}
+      >
+        {price}
+      </div>
+    </div>
+  );
+}
+
+/** 선물숍 — 내 기록에서 출발하는 커머스 (랜딩 소개용, 준비 중 기능) */
+export function GiftShopScreen() {
+  const { frame, fps } = useAnim();
+  return (
+    <AbsoluteFill>
+      <Device bg={M.cream}>
+        {/* 헤더 */}
+        <div
+          style={{
+            flex: "none",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: `${SAFE_TOP + 16}px 18px 8px`,
+            position: "relative",
+          }}
+        >
+          <span style={{ fontSize: 17 }}>←</span>
+          <span
+            style={{
+              position: "absolute",
+              left: 0,
+              right: 0,
+              top: SAFE_TOP + 12,
+              textAlign: "center",
+              fontFamily: SERIF,
+              fontWeight: 700,
+              fontSize: 18,
+              color: M.terra,
+            }}
+          >
+            선물숍
+          </span>
+          <span style={{ fontSize: 16 }}>🛒</span>
+        </div>
+        <div
+          style={{
+            flex: 1,
+            overflow: "hidden",
+            padding: "4px 16px 0",
+            display: "flex",
+            flexDirection: "column",
+            gap: 10,
+          }}
+        >
+          {/* 히어로 배너 */}
+          <div style={appear(frame, fps, 4)}>
+            <Photo src={storeAlbum} height={138} radius={20}>
+              <div
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  background:
+                    "linear-gradient(180deg, rgba(89,58,40,0.25), rgba(139,74,48,0.55))",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  textAlign: "center",
+                }}
+              >
+                <div
+                  style={{
+                    fontFamily: SERIF,
+                    fontSize: 18.5,
+                    fontWeight: 700,
+                    lineHeight: 1.5,
+                    color: "#FFF6EE",
+                    letterSpacing: "-0.01em",
+                    textShadow: "0 2px 8px rgba(0,0,0,0.25)",
+                  }}
+                >
+                  우리 아이의 기록,
+                  <br />
+                  세상에 하나뿐인 선물로
+                </div>
+              </div>
+            </Photo>
+          </div>
+
+          <PillRow
+            pills={["전체", "포토북/앨범", "액자/캔버스"]}
+            style={appear(frame, fps, 14)}
+          />
+
+          <GiftProduct
+            src={storeAlbum}
+            title="프리미엄 성장 앨범 (14개월)"
+            sub="최고급 인화지로 담아내는 기록"
+            price="89,000원"
+            delay={24}
+          />
+          <GiftProduct
+            src={storeGift}
+            title="조부모님 감사 선물 세트"
+            sub="감동을 전하는 특별 패키지"
+            price="55,000원"
+            delay={38}
+          />
+        </div>
+        <Nav5 active="gift" items={NAV_GIFT} />
+      </Device>
+    </AbsoluteFill>
+  );
 }
 
 export function MockupTourScreen() {

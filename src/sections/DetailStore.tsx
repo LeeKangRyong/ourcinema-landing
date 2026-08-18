@@ -1,6 +1,6 @@
 import { FadeIn } from "../components/FadeIn";
 import { PhoneFrame } from "../components/PhoneFrame";
-import { StoreScreen } from "../remotion/screens";
+import { GiftShopScreen } from "../remotion/mockup";
 import iconStore from "../assets/icon-store.svg";
 import illustGift from "../assets/illust/gift.png";
 
@@ -11,7 +11,7 @@ export function DetailStore() {
         <FadeIn className="detail__visual">
           <div className="detail__stage detail__stage--single">
             <PhoneFrame
-              screen={StoreScreen}
+              screen={GiftShopScreen}
               width={300}
               height={600}
               style={{ position: "absolute", left: 0, top: 16 }}

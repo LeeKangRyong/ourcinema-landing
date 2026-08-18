@@ -72,6 +72,7 @@ export function Navigation() {
           <a href="#growth">성장 일기</a>
           <a href="#care">걱정 살펴보기</a>
           <a href="#community">커뮤니티</a>
+          <a href="#store">선물숍</a>
         </nav>
         <a
           className="nav__cta"
