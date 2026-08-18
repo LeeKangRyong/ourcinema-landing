@@ -34,6 +34,8 @@ html {
   /* 스크롤을 멈추면 항상 섹션 경계에 정렬. 섹션이 화면보다 길어지면
      스펙상 스냅 영역 내부는 자유 스크롤이라 갇히지 않는다 */
   scroll-snap-type: y mandatory;
+  /* absolute 스티커·nowrap 텍스트가 뷰포트를 옆으로 밀지 못하게 */
+  overflow-x: clip;
 }
 
 body {
@@ -42,6 +44,7 @@ body {
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   word-break: keep-all;
+  overflow-x: clip;
 }
 
 h1,
@@ -1190,13 +1193,22 @@ img {
   }
 }
 
+@media (max-width: 768px) {
+  /* 모바일에선 섹션이 화면보다 길어 mandatory 스냅이 스크롤을 가둔다 — 해제 */
+  html {
+    scroll-snap-type: none;
+  }
+  .hero__big {
+    white-space: normal;
+  }
+}
+
 @media (max-width: 600px) {
   .section {
     padding: 64px 24px;
   }
   .hero__big {
     font-size: 30px;
-    white-space: normal;
   }
   .hero__label {
     font-size: 14px;
@@ -1215,20 +1227,22 @@ img {
     padding: 13px 24px;
     font-size: 16px;
   }
-  /* 폰 고정폭(340px)이 좁은 화면을 밀어내지 않게 축소 */
+  /* 폰 목업 좌표계를 통째로 축소 — transform과 달리 zoom은
+     레이아웃 박스도 함께 줄어 오버플로우·빈 공간이 안 생긴다 */
   .hero__tour {
-    transform: scale(0.8);
-    transform-origin: top center;
+    zoom: 0.78;
   }
   .hero__visual {
-    padding-top: 60px;
-    padding-bottom: 0;
-    min-height: 620px;
-    align-items: flex-start;
+    padding-top: 56px;
+    padding-bottom: 36px;
   }
   .hero__tour-cap {
     font-size: 13px;
     padding: 8px 16px;
+  }
+  .hero__subtitle {
+    font-size: 17px;
+    margin-top: 28px;
   }
   .section-header h2,
   .detail__content h2,
@@ -1237,8 +1251,48 @@ img {
     font-size: 34px;
   }
   .detail__stage {
-    transform: scale(0.72);
-    transform-origin: top center;
-    height: 480px;
+    zoom: 0.6;
+  }
+  .detail__stage--single {
+    zoom: 0.68;
+  }
+  .detail__visual {
+    min-height: auto;
+  }
+  .detail__panel {
+    padding: 48px 24px;
+    gap: 48px;
+  }
+  .detail__content p {
+    font-size: 17px;
+  }
+  .cta-band {
+    padding: 72px 24px 0;
+  }
+  .cta-band__inner p {
+    font-size: 17px;
+  }
+  .footer {
+    padding: 48px 24px;
+  }
+  .footer__bottom {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .nav__inner {
+    padding: 16px 20px;
+  }
+}
+
+/* 초소형 화면 (360px 이하 안드로이드 등) */
+@media (max-width: 380px) {
+  .hero__tour {
+    zoom: 0.7;
+  }
+  .detail__stage {
+    zoom: 0.52;
+  }
+  .detail__stage--single {
+    zoom: 0.6;
   }
 }
