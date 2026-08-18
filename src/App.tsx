@@ -1,3 +1,4 @@
+import { MotionConfig } from "motion/react";
 import { Navigation } from "./components/Navigation";
 import { Footer } from "./components/Footer";
 import { Hero } from "./sections/Hero";
@@ -10,7 +11,7 @@ import { CtaSection } from "./sections/CtaSection";
 
 export default function App() {
   return (
-    <>
+    <MotionConfig reducedMotion="user">
       <Navigation />
       <main>
         <Hero />
@@ -22,6 +23,6 @@ export default function App() {
         <CtaSection />
       </main>
       <Footer />
-    </>
+    </MotionConfig>
   );
 }

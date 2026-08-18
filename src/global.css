@@ -31,6 +31,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* 앵커 이동·포커스 스크롤 시 고정 헤더에 가려지지 않게 */
+  scroll-padding-top: 64px;
 }
 
 body {
@@ -73,6 +75,7 @@ img {
   align-items: center;
   justify-content: center;
   padding: 96px 48px;
+  scroll-margin-top: 64px;
 }
 
 .panel {
@@ -87,16 +90,30 @@ img {
 
 /* ---------- Navigation ---------- */
 
+/* 배경 없는 투명 내비 — 내릴 때 숨고 올릴 때 등장 */
 .nav {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 100;
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(6px);
-  border-bottom: 1px solid var(--border);
-  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+  background: transparent;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.nav--hidden {
+  transform: translate3d(0, -100%, 0);
+}
+
+/* 키보드 포커스가 nav 안에 있으면 절대 숨기지 않는다 (WCAG 2.4.11) */
+.nav:focus-within {
+  transform: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav {
+    transition: none;
+  }
 }
 
 .nav__inner {
@@ -132,6 +149,7 @@ img {
 }
 
 .nav__cta {
+  display: inline-block;
   padding: 8px 24px;
   border-radius: 9999px;
   background: var(--accent);
@@ -140,43 +158,227 @@ img {
   box-shadow: var(--shadow-card);
 }
 
-/* ---------- Hero ---------- */
+/* ---------- Hero (풀블리드 밴드 + 서비스 투어 폰) ---------- */
 
 .hero {
-  padding-top: 152px;
-}
-
-.hero__panel {
+  position: relative;
+  min-height: min(100vh, 1020px);
   display: flex;
   align-items: center;
-  gap: 48px;
-  padding: 65px;
   overflow: hidden;
-  position: relative;
+  /* 하단 패딩 > 상단: 콘텐츠를 광학 중심(수학적 중앙보다 살짝 위)에 */
+  padding: 130px 48px 160px;
+  background: #ffe9db;
+  scroll-margin-top: 64px;
 }
 
+/* 배경 필름 — 자막 없는 앰비언트 컷이 켄 번즈 줌과 함께 순환 */
+.hero__film {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* 사진 3장 × 4.5초 = 13.5초 루프 */
+.hero__film-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  animation:
+    hero-film-cycle 13.5s linear infinite,
+    hero-film-zoom 13.5s linear infinite;
+}
+
+.hero__film-slide:nth-child(1) {
+  animation-delay: 0s;
+}
+.hero__film-slide:nth-child(2) {
+  animation-delay: 4.5s;
+}
+.hero__film-slide:nth-child(3) {
+  animation-delay: 9s;
+}
+
+@keyframes hero-film-cycle {
+  0% {
+    opacity: 0;
+  }
+  4% {
+    opacity: 1;
+  }
+  29% {
+    opacity: 1;
+  }
+  33.3% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* 줌 폭을 줄여 확대 블러 최소화 */
+@keyframes hero-film-zoom {
+  0% {
+    transform: scale(1.02);
+  }
+  33.3% {
+    transform: scale(1.09);
+  }
+  100% {
+    transform: scale(1.09);
+  }
+}
+
+/* 크림 스크림 — 필름을 기존 피치 색감으로 눌러 텍스트 가독성 확보 */
+.hero__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  /* 텍스트 쪽만 진하게, 사진 쪽은 옅게 — 사진이 선명하게 비치도록 */
+  background: linear-gradient(
+    90deg,
+    rgba(255, 244, 238, 0.96) 0%,
+    rgba(255, 240, 231, 0.86) 48%,
+    rgba(255, 238, 226, 0.28) 80%,
+    rgba(255, 238, 226, 0.4) 100%
+  );
+}
+
+.hero__scrim::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 26%;
+  background: linear-gradient(180deg, transparent, rgba(255, 238, 226, 0.75));
+}
+
+
+/* 60:40 — 텍스트 컬럼에 주도권 (Apple/토스 실측 기반 여백 시스템) */
+.hero__inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1240px;
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  column-gap: 4vw;
+  align-items: center;
+}
+
+/* 텍스트가 목업 영역을 살짝 침범해 그리드를 깨는 오버랩 */
 .hero__content {
-  flex: 1;
+  position: relative;
+  z-index: 2;
+  margin-right: -6%;
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  min-width: 0;
 }
 
+/* 라벨-키워드 스캔 구조: 조사·상황어는 작게, 핵심 구절만 크게.
+   라벨은 큰 줄에 붙이고(0.5em) 의미 단락 사이는 3~4배 벌린다 */
 .hero__title {
-  font-size: 56px;
-  line-height: 1.15;
-  letter-spacing: -1.4px;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero__line-mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em; /* 받침·마커가 마스크에 잘리지 않게 */
+}
+
+.hero__line-mask > .hero__big {
+  display: block;
+}
+
+.hero__label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: clamp(15px, 1.5vw, 20px);
+  font-weight: 700;
+  letter-spacing: 0.01em; /* 라벨은 양수 자간 (Apple eyebrow) */
+  line-height: 1.4;
+  color: var(--ink-soft);
+  margin-bottom: 0.5em;
+}
+
+.hero__label--accent {
+  color: var(--accent);
+}
+
+/* 의미 단락 경계: "평소엔" 그룹 ↔ "걱정되는 순간" 그룹 */
+.hero__row--gap {
+  margin-top: clamp(28px, 3.5vh, 44px);
+}
+
+.hero__big {
+  font-size: clamp(34px, 4.6vw, 60px);
+  line-height: 1.26; /* 한글 디스플레이: 1.2~1.3 (Apple KR·토스 실측) */
+  letter-spacing: -0.01em; /* 주아체는 0 ~ -0.01em까지만 */
+  white-space: nowrap; /* 시각적 줄은 마크업에서 이미 분리됨 */
+}
+
+/* 형광펜 마커 — 텍스트 등장 후 왼→오로 칠해진다 */
+.hero__mark {
+  color: inherit;
+  background-color: transparent;
+  background-image: linear-gradient(
+    transparent 62%,
+    rgba(255, 107, 74, 0.28) 62%
+  );
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  padding: 0.04em 0.14em;
+  margin-inline: -0.14em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  animation: mark-sweep 0.5s ease-out 1.2s forwards;
+}
+
+.hero__mark--late {
+  animation-delay: 1.6s;
+}
+
+@keyframes mark-sweep {
+  to {
+    background-size: 100% 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__mark {
+    animation: none;
+    background-size: 100% 100%;
+  }
+  .hero__film-slide {
+    animation: none;
+  }
+  .hero__film-slide:first-child {
+    opacity: 1;
+    transform: scale(1.04);
+  }
 }
 
 .hero__subtitle {
-  font-size: 20px;
+  font-size: 19px;
+  line-height: 1.65;
   color: var(--ink-soft);
+  margin-top: 36px;
+  max-width: 27em;
 }
 
 .hero__buttons {
   display: flex;
   gap: 16px;
-  padding-top: 16px;
+  margin-top: 40px;
+  flex-wrap: wrap;
 }
 
 .store-button {
@@ -201,22 +403,72 @@ img {
   border: 1px solid var(--border);
 }
 
-.hero__visuals {
-  flex: 1;
+.hero__visual {
   position: relative;
-  height: 650px;
+  display: flex;
+  justify-content: center;
+  min-width: 0;
 }
 
-.hero__bg-graphic {
+.hero__tour {
+  position: relative;
+}
+
+/* 현재 장면 캡션 — 폰 위에 뜨는 칩, 장면 전환마다 재등장 */
+.hero__tour-cap {
   position: absolute;
-  inset: -25%;
-  opacity: 0.1;
-  pointer-events: none;
+  top: -58px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  background: var(--ink);
+  color: #fff;
+  border-radius: 9999px;
+  padding: 10px 22px;
+  font-size: 15px;
+  font-weight: 700;
+  box-shadow: 0 8px 20px rgba(68, 60, 55, 0.25);
+  animation: cap-in 0.45s ease-out;
+  z-index: 5;
 }
 
-.hero__bg-graphic img {
-  width: 100%;
-  height: 100%;
+@keyframes cap-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.hero__tour-dots {
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 9px;
+}
+
+.hero__tour-dots i {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: #e8d5c9;
+  transition: background 0.3s ease;
+}
+
+.hero__tour-dots i.on {
+  background: var(--accent);
+}
+
+.hero__mascot {
+  position: absolute;
+  left: 4%;
+  bottom: 40px;
+  z-index: 2;
 }
 
 /* ---------- Phone frame ---------- */
@@ -380,6 +632,8 @@ img {
 }
 
 .pill-button {
+  display: inline-flex;
+  align-items: center;
   padding: 16px 40px;
   border-radius: 9999px;
   font-size: 18px;
@@ -534,6 +788,8 @@ img {
 }
 
 .cta__button {
+  display: inline-flex;
+  align-items: center;
   margin-top: 16px;
   padding: 20px 48px;
   border-radius: 9999px;
@@ -546,6 +802,61 @@ img {
 
 .cta__button:hover {
   transform: translateY(-2px);
+}
+
+/* ---------- 걱정 대응 4단계 스텝 ---------- */
+
+.flow-steps {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.flow-step {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.flow-step__num {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 9999px;
+  background: #fff;
+  color: var(--accent);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 18px;
+}
+
+.flow-step h3 {
+  font-size: 20px;
+  margin-bottom: 4px;
+}
+
+.flow-step p {
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+/* 준비 중 기능 안내 (죽은 버튼 대신) */
+.soon-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 9999px;
+  background: #fff;
+  border: 1px dashed var(--border);
+  color: var(--ink-soft);
+  font-size: 16px;
 }
 
 /* ---------- 마미톡풍 컬러 밴드 & 일러스트 ---------- */
@@ -711,6 +1022,17 @@ img {
   object-fit: cover;
 }
 
+.cta-band__gift-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 9999px;
+  background: var(--accent-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
 /* 밴드 하단에 걸쳐 서 있는 가족 일러스트 카드 */
 .cta-band__family {
   display: block;
@@ -803,9 +1125,24 @@ img {
 /* ---------- Responsive ---------- */
 
 @media (max-width: 1024px) {
-  .hero__panel,
   .detail__panel {
     flex-direction: column;
+  }
+  .hero {
+    min-height: auto;
+    padding: 130px 32px 90px;
+  }
+  .hero__inner {
+    grid-template-columns: 1fr;
+    row-gap: 40px;
+  }
+  .hero__content {
+    margin-right: 0;
+  }
+  .hero__visual {
+    padding-top: 70px;
+    padding-bottom: 50px;
+    width: 100%;
   }
   .bento {
     grid-template-columns: 1fr;
@@ -816,12 +1153,6 @@ img {
   }
   .footer__grid {
     grid-template-columns: 1fr;
-  }
-  /* 세로 배치 시 고정 px 좌표계가 화면을 벗어나지 않게 폭을 제한 */
-  .hero__visuals {
-    width: 100%;
-    max-width: 520px;
-    margin-inline: auto;
   }
   .phone-pair {
     max-width: 440px;
@@ -836,19 +1167,47 @@ img {
   .section {
     padding: 64px 24px;
   }
-  .hero__title {
-    font-size: 40px;
+  .hero__big {
+    font-size: 30px;
+    white-space: normal;
+  }
+  .hero__label {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+  .hero__row--gap {
+    margin-top: 24px;
+  }
+  .hero {
+    padding: 110px 24px 70px;
+  }
+  .nav__links {
+    display: none;
+  }
+  .store-button {
+    padding: 13px 24px;
+    font-size: 16px;
+  }
+  /* 폰 고정폭(340px)이 좁은 화면을 밀어내지 않게 축소 */
+  .hero__tour {
+    transform: scale(0.8);
+    transform-origin: top center;
+  }
+  .hero__visual {
+    padding-top: 60px;
+    padding-bottom: 0;
+    min-height: 620px;
+    align-items: flex-start;
+  }
+  .hero__tour-cap {
+    font-size: 13px;
+    padding: 8px 16px;
   }
   .section-header h2,
   .detail__content h2,
   .reviews h2,
   .cta-band__inner h2 {
     font-size: 34px;
-  }
-  .hero__visuals {
-    transform: scale(0.64);
-    transform-origin: top center;
-    height: 440px;
   }
   .detail__stage {
     transform: scale(0.72);

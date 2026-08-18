@@ -1,4 +1,6 @@
 import { Player } from "@remotion/player";
+import type { PlayerRef } from "@remotion/player";
+import { useEffect, useRef } from "react";
 import type { ComponentType, CSSProperties } from "react";
 
 type Props = {
@@ -9,6 +11,8 @@ type Props = {
   durationInFrames?: number;
   /** 시작 프레임 (여러 폰의 동시 재생 타이밍을 어긋나게 할 때) */
   initialFrame?: number;
+  /** 재생 프레임 콜백 — 폰 밖 UI(캡션 등)를 동기화할 때 */
+  onFrame?: (frame: number) => void;
   style?: CSSProperties;
   className?: string;
 };
@@ -26,12 +30,22 @@ export function PhoneFrame({
   height = 520,
   durationInFrames = 240,
   initialFrame = 0,
+  onFrame,
   style,
   className,
 }: Props) {
   const innerW = width - 20;
   const innerH = height - 20;
   const compositionHeight = Math.round((COMPOSITION_WIDTH * innerH) / innerW);
+  const playerRef = useRef<PlayerRef>(null);
+
+  useEffect(() => {
+    const player = playerRef.current;
+    if (!player || !onFrame) return;
+    const listener = (e: { detail: { frame: number } }) => onFrame(e.detail.frame);
+    player.addEventListener("frameupdate", listener);
+    return () => player.removeEventListener("frameupdate", listener);
+  }, [onFrame]);
 
   return (
     <div
@@ -40,6 +54,7 @@ export function PhoneFrame({
     >
       <div className="phone__screen">
         <Player
+          ref={playerRef}
           component={screen}
           durationInFrames={durationInFrames}
           fps={FPS}
