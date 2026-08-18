@@ -832,7 +832,7 @@ export function ReportFlowScreen() {
 
 export const TOUR_SCENE = 150;
 export const TOUR_CAPTIONS = [
-  "① 평소엔 — 가족이 함께 쓰는 성장 일기",
+  "① 평소엔 가족이 함께 쓰는 성장 일기",
   "② 매달 자동으로 완성되는 회고",
   "③ 걱정되면, 주부리에게 물어보기",
   "④ 기록으로 걱정 살펴보기",

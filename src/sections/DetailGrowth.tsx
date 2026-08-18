@@ -1,6 +1,6 @@
 import { FadeIn } from "../components/FadeIn";
 import { PhoneFrame } from "../components/PhoneFrame";
-import { HomeFeedScreen, AlbumScreen } from "../remotion/screens";
+import { DiaryFeedScreen, AlbumCalScreen } from "../remotion/mockup";
 import iconSns from "../assets/icon-sns.svg";
 import illustAlbum from "../assets/illust/album.png";
 
@@ -36,7 +36,7 @@ export function DetailGrowth() {
         <FadeIn className="detail__visual" delay={0.1}>
           <div className="detail__stage">
             <PhoneFrame
-              screen={AlbumScreen}
+              screen={AlbumCalScreen}
               width={228}
               height={494}
               style={{
@@ -47,7 +47,7 @@ export function DetailGrowth() {
               }}
             />
             <PhoneFrame
-              screen={HomeFeedScreen}
+              screen={DiaryFeedScreen}
               width={240}
               height={520}
               style={{ position: "absolute", left: 0, top: 32 }}

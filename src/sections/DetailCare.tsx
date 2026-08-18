@@ -1,9 +1,11 @@
+import { useCallback, useState } from "react";
 import { FadeIn } from "../components/FadeIn";
 import { PhoneFrame } from "../components/PhoneFrame";
 import {
-  ReportFlowScreen,
-  REPORT_FLOW_DURATION,
-} from "../remotion/screens";
+  WorryFlowScreen,
+  WORRY_FLOW_DURATION,
+  worryStepAt,
+} from "../remotion/mockup";
 import iconCare from "../assets/icon-care.svg";
 import illustDoctor from "../assets/illust/doctor.png";
 
@@ -33,14 +35,21 @@ const FLOW_STEPS = [
 ];
 
 export function DetailCare() {
+  // 폰 안 데모의 재생 위치에 맞춰 왼쪽 4단계 설명을 강조
+  const [activeStep, setActiveStep] = useState(1);
+  const handleFrame = useCallback((frame: number) => {
+    setActiveStep(worryStepAt(frame));
+  }, []);
+
   return (
     <section className="section band band--mint" id="care">
       <div className="detail__panel band__inner">
         <FadeIn className="detail__visual">
           <div className="detail__stage detail__stage--single">
             <PhoneFrame
-              screen={ReportFlowScreen}
-              durationInFrames={REPORT_FLOW_DURATION}
+              screen={WorryFlowScreen}
+              durationInFrames={WORRY_FLOW_DURATION}
+              onFrame={handleFrame}
               width={300}
               height={600}
               style={{ position: "absolute", left: 0, top: 16 }}
@@ -69,7 +78,12 @@ export function DetailCare() {
           </p>
           <ol className="flow-steps">
             {FLOW_STEPS.map((step) => (
-              <li className="flow-step" key={step.num}>
+              <li
+                className={`flow-step${
+                  Number(step.num) === activeStep ? " flow-step--on" : ""
+                }`}
+                key={step.num}
+              >
                 <span className="flow-step__num">{step.num}</span>
                 <div>
                   <h3>{step.title}</h3>

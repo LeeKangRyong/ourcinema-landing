@@ -833,6 +833,13 @@ img {
   align-items: flex-start;
 }
 
+/* 폰 데모 재생 위치와 동기화 — 진행 중인 단계는 숫자 원만 색이 바뀐다 */
+.flow-step--on .flow-step__num {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
 .flow-step__num {
   flex-shrink: 0;
   width: 36px;
@@ -847,6 +854,10 @@ img {
   justify-content: center;
   font-family: var(--font-display);
   font-size: 18px;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
 }
 
 .flow-step h3 {

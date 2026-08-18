@@ -2,11 +2,11 @@ import { useCallback, useState } from "react";
 import { motion } from "motion/react";
 import { PhoneFrame } from "../components/PhoneFrame";
 import {
-  ServiceTourScreen,
-  TOUR_CAPTIONS,
-  TOUR_DURATION,
-  TOUR_SCENE,
-} from "../remotion/screens";
+  MockupTourScreen,
+  MOCKUP_TOUR_CAPTIONS,
+  MOCKUP_TOUR_DURATION,
+  tourSceneAt,
+} from "../remotion/mockup";
 import illustMascot from "../assets/illust/mascot.png";
 import filmSleep from "../assets/photos/film-sleep.png";
 import filmFamily from "../assets/photos/film-family.png";
@@ -51,9 +51,7 @@ const REVEAL_EASE = [0.22, 1, 0.36, 1] as const;
 export function Hero() {
   const [scene, setScene] = useState(0);
   const handleFrame = useCallback((frame: number) => {
-    setScene(
-      Math.min(TOUR_CAPTIONS.length - 1, Math.floor(frame / TOUR_SCENE))
-    );
+    setScene(tourSceneAt(frame));
   }, []);
 
   return (
@@ -136,17 +134,17 @@ export function Hero() {
         >
           <div className="hero__tour">
             <span className="hero__tour-cap" key={scene}>
-              {TOUR_CAPTIONS[scene]}
+              {MOCKUP_TOUR_CAPTIONS[scene]}
             </span>
             <PhoneFrame
-              screen={ServiceTourScreen}
-              durationInFrames={TOUR_DURATION}
+              screen={MockupTourScreen}
+              durationInFrames={MOCKUP_TOUR_DURATION}
               width={340}
               height={700}
               onFrame={handleFrame}
             />
             <span className="hero__tour-dots">
-              {TOUR_CAPTIONS.map((caption, i) => (
+              {MOCKUP_TOUR_CAPTIONS.map((caption, i) => (
                 <i key={caption} className={i === scene ? "on" : ""} />
               ))}
             </span>
