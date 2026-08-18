@@ -27,18 +27,19 @@ export function DetailStore() {
         <FadeIn className="detail__content" delay={0.1}>
           <span className="badge badge--white">
             <img src={iconStore} alt="" />
-            스토어
+            선물숍 · 준비 중
           </span>
           <h2>
-            검증된 육아템만
+            내 기록에서 출발하는
             <br />
-            골라 담았어요
+            선물숍
           </h2>
           <p>
-            선배 부모들이 직접 써보고 추천한 아이템을 한곳에. 아이 월령에 딱
-            맞는 상품을 매주 새롭게 만나보세요.
+            매달 쌓인 회고를 실물 앨범·포토북으로, 소중한 순간을 액자와
+            달력으로. 조부모님도 각자 결제로 바로 선물할 수 있게 준비하고
+            있어요.
           </p>
-          <button className="pill-button">스토어 구경하기</button>
+          <span className="soon-note">🎁 확장 기능으로 준비 중이에요</span>
         </FadeIn>
       </div>
     </section>

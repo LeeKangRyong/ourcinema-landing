@@ -119,7 +119,7 @@ export function TopBar({ toggle = "피드" }: { toggle?: "피드" | "달력" }) 
         >
           👶
         </div>
-        <span style={{ fontSize: 20, fontWeight: 800 }}>심여준네 ▾</span>
+        <span style={{ fontSize: 20, fontWeight: 800 }}>서준이네 ▾</span>
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
         <div

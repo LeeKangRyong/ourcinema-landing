@@ -1,50 +1,40 @@
 import { FadeIn } from "../components/FadeIn";
-import iconStar from "../assets/icon-star.svg";
 import illustMascot from "../assets/illust/mascot.png";
 
-const REVIEWS = [
+const MOMENTS = [
   {
-    quote: "“육아 기록이 너무 편해졌어요!”",
+    quote: "“새벽에 ‘말 늦는 아기’ 검색만 한참 했어요. 정작 병원에선 말문이 막히고요.”",
     avatar: "맘",
-    name: "김지영",
-    role: "12개월차 맘",
+    role: "16개월 아이 엄마",
   },
   {
-    quote: "“병원 갈 때 리포트 보여주니 선생님이 좋아하시네요”",
+    quote: "“진료 3분 안에 두 달치 걱정을 설명할 자신이 없어요.”",
     avatar: "대디",
-    name: "박민수",
-    role: "6개월차 대디",
+    role: "14개월 아이 아빠",
   },
   {
-    quote: "“조부모님이 아이 사진 보며 너무 즐거워하세요”",
+    quote: "“아이 사진 보내달라는 부모님 성화에, 고르다 지쳐서 결국 못 보내요.”",
     avatar: "맘",
-    name: "이현주",
-    role: "18개월차 맘",
+    role: "9개월 아이 엄마",
   },
   {
-    quote: "“매일매일 기록하는 재미가 쏠쏠해요. 추천합니다!”",
+    quote: "“걱정을 꺼내면 유난이라 할까 봐, 혼자만 끙끙 앓게 돼요.”",
     avatar: "대디",
-    name: "정태웅",
-    role: "3개월차 대디",
+    role: "20개월 아이 아빠",
   },
 ];
 
-function ReviewCards() {
+function MomentCards() {
   return (
     <div className="reviews__group">
-      {REVIEWS.map((review) => (
-        <div className="review-card" key={review.name}>
-          <div className="review-card__stars">
-            {Array.from({ length: 5 }, (_, s) => (
-              <img key={s} src={iconStar} alt="" />
-            ))}
-          </div>
-          <p className="review-card__quote">{review.quote}</p>
+      {MOMENTS.map((moment) => (
+        <div className="review-card" key={moment.quote}>
+          <p className="review-card__quote">{moment.quote}</p>
           <div className="review-card__author">
-            <div className="review-card__avatar">{review.avatar}</div>
+            <div className="review-card__avatar">{moment.avatar}</div>
             <div>
-              <div className="review-card__name">{review.name}</div>
-              <div className="review-card__role">{review.role}</div>
+              <div className="review-card__name">{moment.role}</div>
+              <div className="review-card__role">아워시네마가 풀려는 순간</div>
             </div>
           </div>
         </div>
@@ -63,13 +53,13 @@ export function Reviews() {
             alt=""
             className="sticker sticker--md float-slow"
           />
-          <h2>이미 많은 부모님들이 아워시네마와 함께하고 있어요</h2>
+          <h2>아워시네마는 이런 순간들에서 출발했어요</h2>
         </FadeIn>
         <FadeIn className="reviews__viewport">
           {/* 같은 카드 묶음을 두 번 이어붙여 -50% 이동으로 무한 루프 */}
           <div className="reviews__track">
-            <ReviewCards />
-            <ReviewCards />
+            <MomentCards />
+            <MomentCards />
           </div>
         </FadeIn>
       </div>

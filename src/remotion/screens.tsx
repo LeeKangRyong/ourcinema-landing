@@ -16,8 +16,6 @@ import babySleep from "../assets/photos/baby5.jpg";
 import babyTube from "../assets/photos/baby1.jpg";
 import babyFeet from "../assets/photos/baby2.jpg";
 import babyBlock from "../assets/photos/baby4.jpg";
-import familyPhoto from "../assets/photos/family1.jpg";
-import doctorPhoto from "../assets/photos/doctor.jpg";
 
 const cardStyle = {
   background: C.card,
@@ -45,8 +43,8 @@ export function HomeFeedScreen() {
           }}
         >
           {[
-            { chip: "여돌", text: "8월 리포트 도착" },
-            { chip: "여순", text: "리포트 5일 뒤" },
+            { chip: "서준", text: "8월 리포트 도착" },
+            { chip: "서아", text: "리포트 5일 뒤" },
           ].map((card) => (
             <div
               key={card.chip}
@@ -128,7 +126,7 @@ export function HomeFeedScreen() {
               fontSize: 14,
             }}
           >
-            <ChildChip name="여돌" />
+            <ChildChip name="서준" />
             <span style={{ color: C.sub }}>엄마 · 2시간 전</span>
           </div>
           <Photo src={babyBear} height={195} />
@@ -168,7 +166,7 @@ export function HomeFeedScreen() {
             ...appear(frame, fps, 56),
           }}
         >
-          ✨ 여돌이의 7월 회고가 만들어졌어요 →
+          ✨ 서준이의 7월 회고가 만들어졌어요 →
         </div>
       </Shell>
     </AbsoluteFill>
@@ -193,8 +191,8 @@ export function AlbumScreen() {
         >
           <div style={{ fontSize: 21, fontWeight: 800 }}>🎞️ 회고</div>
           <div style={{ display: "flex", gap: 6 }}>
-            <ChildChip name="여돌" />
-            <ChildChip name="여순" active={false} />
+            <ChildChip name="서준" />
+            <ChildChip name="서아" active={false} />
           </div>
         </div>
 
@@ -207,7 +205,7 @@ export function AlbumScreen() {
           }}
         >
           <div style={{ fontSize: 15.5, fontWeight: 800, marginBottom: 9 }}>
-            7월의 여돌
+            7월의 서준
           </div>
           <Photo src={babySleep} height={165}>
             <div
@@ -266,7 +264,7 @@ export function AlbumScreen() {
           }}
         >
           <div style={{ fontSize: 15.5, fontWeight: 800, marginBottom: 9 }}>
-            6월의 여돌
+            6월의 서준
           </div>
           <Photo src={babyTube} height={105} />
         </div>
@@ -355,7 +353,7 @@ function Bubble({
   );
 }
 
-/** C1 · 챗봇 — 판정하지 않는 상담, 대화 끝은 다음 행동 버튼 */
+/** C1 · 챗봇 주부리 — 판정하지 않는 접수창구, 걱정은 🔒 갈래로 */
 export function CarebotScreen() {
   const { frame, fps } = useAnim();
   const typingVisible = frame >= 30 && frame < 70;
@@ -364,7 +362,7 @@ export function CarebotScreen() {
     <AbsoluteFill>
       <Shell>
         <div style={{ fontSize: 21, fontWeight: 800, marginBottom: 4 }}>
-          💬 물어보기
+          💬 주부리에게 물어보기
         </div>
         <div
           style={{
@@ -378,11 +376,11 @@ export function CarebotScreen() {
             boxShadow: SHADOW,
           }}
         >
-          심여준네 · 👶 여돌 (12개월)
+          서준이네 · 👶 서준 (14개월)
         </div>
 
         <Bubble who="user" style={appear(frame, fps, 10)}>
-          요즘 말이 좀 늦는 것 같아서 걱정돼요
+          아이가 말이 좀 늦는 것 같아서 걱정돼요
         </Bubble>
 
         {typingVisible && (
@@ -392,16 +390,15 @@ export function CarebotScreen() {
         )}
         {frame >= 70 && (
           <Bubble who="bot" style={{ marginTop: 12, ...appear(frame, fps, 70) }}>
-            기록을 보면 옹알이가 꾸준히 늘고 있어요. 12개월 아이들 통계로는
-            10~18개월 사이 첫 단어가 나오는 경우가 많아요 — 아직 걱정할 구간이
-            아니에요 🙂
+            적어주신 마음, 기록에 담아뒀어요. 그 걱정, 쌓인 기록과 함께 차근히
+            살펴볼까요?
           </Bubble>
         )}
 
         {[
-          { icon: "🎬", label: "말하는 영상 남기기", tone: C.coral, bg: C.coralSoft },
-          { icon: "🏥", label: "병원 갈 때 보여줄 자료 만들기", tone: C.teal, bg: C.tealSoft },
-          { icon: "📖", label: "8월 소식지 보기", tone: C.teal, bg: C.tealSoft },
+          { icon: "🔒", label: "걱정 살펴보기 시작", tone: C.coral, bg: C.coralSoft },
+          { icon: "📖", label: "지난달 서준이 순간 모아줘", tone: C.teal, bg: C.tealSoft },
+          { icon: "📅", label: "검진·접종 일정 알려줘", tone: C.teal, bg: C.tealSoft },
         ].map((btn, i) => (
           <div
             key={btn.label}
@@ -434,7 +431,7 @@ export function CarebotScreen() {
             lineHeight: 1.5,
           }}
         >
-          아워시네마는 진단하지 않아요 — 결론은 전문가와 함께예요
+          이 대화는 가족에게 보이지 않아요 — 결론은 전문가와 함께예요
         </div>
       </Shell>
     </AbsoluteFill>
@@ -442,16 +439,22 @@ export function CarebotScreen() {
 }
 
 /* ---------------------------------------------------------------- */
-/** 리포트 플로우 — 챗봇 → 사진 선택 → 리포트 생성 → 전문가 비대면 상담 */
+/** 리포트 플로우 — 확정된 걱정 대응 4단계: 물어보기 → 살펴보기 → 기록 고르기 → 리포트 */
 
 export const REPORT_FLOW_DURATION = 480;
 const SCENE = 120;
 
-function SceneFade({ children }: { children: React.ReactNode }) {
+function SceneFade({
+  children,
+  duration = SCENE,
+}: {
+  children: React.ReactNode;
+  duration?: number;
+}) {
   const f = useCurrentFrame(); // Sequence 내 상대 프레임
   const opacity = interpolate(
     f,
-    [0, 12, SCENE - 12, SCENE],
+    [0, 12, duration - 12, duration],
     [0, 1, 1, 0],
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
   );
@@ -459,7 +462,7 @@ function SceneFade({ children }: { children: React.ReactNode }) {
 }
 
 function StepHeader({ active }: { active: number }) {
-  const steps = ["상담", "사진", "리포트", "전문가"];
+  const steps = ["물어보기", "살펴보기", "기록", "리포트"];
   return (
     <div style={{ display: "flex", gap: 5, marginBottom: 14 }}>
       {steps.map((label, i) => (
@@ -489,11 +492,11 @@ function SceneChat() {
     <Shell>
       <StepHeader active={0} />
       <Bubble who="user" style={appear(frame, fps, 8)}>
-        어제부터 미열이 있고 밥을 잘 안 먹어요
+        아이가 말이 좀 늦는 것 같아서 걱정돼요
       </Bubble>
       <Bubble who="bot" style={{ marginTop: 12, ...appear(frame, fps, 34) }}>
-        증상을 정리해 드릴게요. 언제부터였는지, 최근 사진·영상을 함께 보면
-        더 정확해요.
+        그 걱정, 쌓인 기록과 함께 차근히 살펴볼까요? 여기서부터는 부모님만
+        봐요 — 가족에게 보이지 않아요.
       </Bubble>
       <div
         style={{
@@ -509,7 +512,111 @@ function SceneChat() {
           ...appear(frame, fps, 66),
         }}
       >
-        🏥 병원 갈 때 보여줄 자료 만들기 →
+        🔒 걱정 살펴보기 시작 →
+      </div>
+    </Shell>
+  );
+}
+
+/** 살펴보기 — K-DST 월령 문항을 참고한 한 화면 한 질문 */
+function SceneCheck() {
+  const { frame, fps } = useAnim();
+  const options = ["자주 해요", "가끔 해요", "거의 없어요"];
+  const picked = 2;
+  return (
+    <Shell>
+      <StepHeader active={1} />
+      <div
+        style={{
+          fontSize: 12.5,
+          color: C.teal,
+          fontWeight: 800,
+          marginBottom: 4,
+          ...appear(frame, fps, 6),
+        }}
+      >
+        🔒 부모님만 봐요 · 이맘때(14개월) 살펴보기
+      </div>
+      <div
+        style={{
+          fontSize: 17,
+          fontWeight: 800,
+          lineHeight: 1.4,
+          marginBottom: 14,
+          ...appear(frame, fps, 6),
+        }}
+      >
+        서준이는 “엄마” 같은 말을
+        <br />
+        얼마나 하나요?
+      </div>
+      {options.map((label, i) => {
+        const isPicked = i === picked;
+        return (
+          <div
+            key={label}
+            style={{
+              ...cardStyle,
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              padding: "13px 15px",
+              marginBottom: 9,
+              fontSize: 14.5,
+              fontWeight: 700,
+              border: isPicked ? `2px solid ${C.teal}` : "2px solid transparent",
+              color: isPicked ? C.teal : C.ink,
+              ...appear(frame, fps, 16 + i * 10),
+            }}
+          >
+            {label}
+            {isPicked && (
+              <span
+                style={{
+                  width: 22,
+                  height: 22,
+                  borderRadius: 11,
+                  background: C.teal,
+                  color: "#fff",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: 12,
+                  fontWeight: 800,
+                  ...pop(frame, fps, 60),
+                }}
+              >
+                ✓
+              </span>
+            )}
+          </div>
+        );
+      })}
+      <div
+        style={{
+          fontSize: 11.5,
+          color: C.sub,
+          lineHeight: 1.5,
+          marginBottom: 12,
+          ...appear(frame, fps, 50),
+        }}
+      >
+        ⓘ K-DST 월령 문항을 참고했어요 — 판단이 아니라 기록을 위한 질문이에요
+      </div>
+      <div
+        style={{
+          background: C.teal,
+          color: "#fff",
+          borderRadius: 16,
+          padding: "12px 0",
+          textAlign: "center",
+          fontSize: 14.5,
+          fontWeight: 800,
+          boxShadow: "0 8px 18px rgba(43,160,138,0.3)",
+          ...appear(frame, fps, 80),
+        }}
+      >
+        다음 →
       </div>
     </Shell>
   );
@@ -521,12 +628,12 @@ function ScenePhotoPick() {
   const picked = [0, 2, 3];
   return (
     <Shell>
-      <StepHeader active={1} />
+      <StepHeader active={2} />
       <div style={{ fontSize: 17, fontWeight: 800, marginBottom: 4, ...appear(frame, fps, 6) }}>
-        보여드릴 사진·영상을 골라주세요
+        그 무렵의 기록이에요 — 함께 담을 장면을 골라주세요
       </div>
       <div style={{ fontSize: 12.5, color: C.sub, marginBottom: 12, ...appear(frame, fps, 6) }}>
-        7월 20일~8월 13일 · 걱정 표시한 기록 먼저
+        6월 12일~8월 14일 · 무엇을 담을지는 부모님이 정해요
       </div>
       <div
         style={{
@@ -580,7 +687,7 @@ function ScenePhotoPick() {
           ...appear(frame, fps, 80),
         }}
       >
-        3장 골랐어요 · 정리하기 →
+        3장 골랐어요 · 다음 →
       </div>
     </Shell>
   );
@@ -595,7 +702,7 @@ function SceneReport() {
   const done = frame >= 55;
   return (
     <Shell>
-      <StepHeader active={2} />
+      <StepHeader active={3} />
       <div style={{ fontSize: 17, fontWeight: 800, marginBottom: 12, ...appear(frame, fps, 4) }}>
         {done ? "리포트가 준비됐어요" : "리포트를 만들고 있어요…"}
       </div>
@@ -609,7 +716,7 @@ function SceneReport() {
           }}
         >
           <span style={{ fontSize: 15, fontWeight: 800 }}>
-            🏥 여돌 · 증상 정리 리포트
+            📄 서준이의 기록 · 발달 정리본
           </span>
           {done && (
             <span
@@ -646,9 +753,9 @@ function SceneReport() {
           />
         </div>
         {[
-          ["기간", "8월 12일~13일 · 미열, 식욕 저하"],
-          ["기록", "사진 3장 + 육아 일기 2건"],
-          ["통계", "몸무게 또래 상위 12% · 수유량 -18%"],
+          ["요약", "말 표현이 늦는 것 같아요 · 두 달 전부터"],
+          ["기록", "사진 3장 + 관찰 응답 3건"],
+          ["또래", "비슷한 시기 4~10단어 65% · 구간 표시"],
         ].map(([k, v], i) => (
           <div
             key={k}
@@ -666,7 +773,7 @@ function SceneReport() {
           </div>
         ))}
         <div style={{ fontSize: 11.5, color: C.sub, marginTop: 6 }}>
-          병명 추측은 하지 않아요 — 결론은 전문가가
+          아이의 상태를 판단하지 않아요 — 결론은 전문가의 영역이에요
         </div>
       </div>
       {done && (
@@ -684,125 +791,14 @@ function SceneReport() {
             ...appear(frame, fps, 66),
           }}
         >
-          👩‍⚕️ 전문가에게 보내고 상담 연결 →
+          🏥 병원 가기 전, 선생님께 미리 보내기 →
         </div>
       )}
     </Shell>
   );
 }
 
-function SceneExpertCall() {
-  const { frame, fps } = useAnim();
-  return (
-    <Shell pad={14}>
-      <StepHeader active={3} />
-      <div style={{ position: "relative", ...appear(frame, fps, 6) }}>
-        <Photo src={doctorPhoto} height={430} radius={22}>
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              background:
-                "linear-gradient(180deg, rgba(0,0,0,0) 60%, rgba(0,0,0,0.45))",
-            }}
-          />
-          <div
-            style={{
-              position: "absolute",
-              left: 12,
-              bottom: 12,
-              color: "#fff",
-            }}
-          >
-            <div style={{ fontSize: 15.5, fontWeight: 800 }}>김소아 선생님</div>
-            <div style={{ fontSize: 12.5, opacity: 0.9 }}>
-              소아청소년과 전문의 · 비대면 상담
-            </div>
-          </div>
-          <div
-            style={{
-              position: "absolute",
-              top: 10,
-              left: 10,
-              background: "rgba(255,80,80,0.92)",
-              color: "#fff",
-              borderRadius: 999,
-              padding: "3px 10px",
-              fontSize: 11.5,
-              fontWeight: 800,
-              ...pop(frame, fps, 20),
-            }}
-          >
-            ● 연결됨 12:04
-          </div>
-          <div
-            style={{
-              position: "absolute",
-              top: 10,
-              right: 10,
-              width: 62,
-              height: 82,
-              borderRadius: 12,
-              overflow: "hidden",
-              border: "2px solid rgba(255,255,255,0.85)",
-            }}
-          >
-            <img
-              src={familyPhoto}
-              alt=""
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
-            />
-          </div>
-        </Photo>
-      </div>
-
-      <div
-        style={{
-          ...cardStyle,
-          padding: "10px 13px",
-          marginTop: 11,
-          fontSize: 12.5,
-          lineHeight: 1.5,
-          color: C.ink,
-          ...appear(frame, fps, 32),
-        }}
-      >
-        📎 증상 정리 리포트가 미리 전달됐어요 — 사진 3장 + 일기 2건
-      </div>
-
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          gap: 14,
-          marginTop: 14,
-          ...appear(frame, fps, 48),
-        }}
-      >
-        {["🎤", "📹", "🔴"].map((icon) => (
-          <div
-            key={icon}
-            style={{
-              width: 46,
-              height: 46,
-              borderRadius: 23,
-              background: icon === "🔴" ? "#FFE3E0" : "#fff",
-              boxShadow: SHADOW,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 19,
-            }}
-          >
-            {icon}
-          </div>
-        ))}
-      </div>
-    </Shell>
-  );
-}
-
-/** (챗봇 → 사진 선택) → (리포트 생성 → 전문가 비대면 상담) 순서로 재생 */
+/** 물어보기 → 살펴보기 → 기록 고르기 → 리포트 순서로 재생 */
 export function ReportFlowScreen() {
   return (
     <AbsoluteFill style={{ background: C.bg }}>
@@ -813,19 +809,54 @@ export function ReportFlowScreen() {
       </Sequence>
       <Sequence from={SCENE} durationInFrames={SCENE}>
         <SceneFade>
-          <ScenePhotoPick />
+          <SceneCheck />
         </SceneFade>
       </Sequence>
       <Sequence from={SCENE * 2} durationInFrames={SCENE}>
         <SceneFade>
-          <SceneReport />
+          <ScenePhotoPick />
         </SceneFade>
       </Sequence>
       <Sequence from={SCENE * 3} durationInFrames={SCENE}>
         <SceneFade>
-          <SceneExpertCall />
+          <SceneReport />
         </SceneFade>
       </Sequence>
+    </AbsoluteFill>
+  );
+}
+
+/* ---------------------------------------------------------------- */
+/** 서비스 투어 — 히어로용: 이 폰 하나만 보면 서비스 전체가 이해되는 5장면 순회
+ *  ① 홈 피드 → ② 회고 → ③ 주부리 → ④ 걱정 살펴보기 → ⑤ 리포트 */
+
+export const TOUR_SCENE = 150;
+export const TOUR_CAPTIONS = [
+  "① 평소엔 — 가족이 함께 쓰는 성장 일기",
+  "② 매달 자동으로 완성되는 회고",
+  "③ 걱정되면, 주부리에게 물어보기",
+  "④ 기록으로 걱정 살펴보기",
+  "⑤ 전문가에게 가져갈 리포트",
+];
+export const TOUR_DURATION = TOUR_SCENE * TOUR_CAPTIONS.length;
+
+export function ServiceTourScreen() {
+  const scenes = [
+    HomeFeedScreen,
+    AlbumScreen,
+    CarebotScreen,
+    SceneCheck,
+    SceneReport,
+  ];
+  return (
+    <AbsoluteFill style={{ background: C.bg }}>
+      {scenes.map((TourScene, i) => (
+        <Sequence key={i} from={i * TOUR_SCENE} durationInFrames={TOUR_SCENE}>
+          <SceneFade duration={TOUR_SCENE}>
+            <TourScene />
+          </SceneFade>
+        </Sequence>
+      ))}
     </AbsoluteFill>
   );
 }
@@ -955,8 +986,8 @@ export function StoreScreen() {
         >
           <div style={{ fontSize: 21, fontWeight: 800 }}>🛍️ 선물숍</div>
           <div style={{ display: "flex", gap: 6 }}>
-            <ChildChip name="여돌" />
-            <ChildChip name="여순" active={false} />
+            <ChildChip name="서준" />
+            <ChildChip name="서아" active={false} />
           </div>
         </div>
 
@@ -977,7 +1008,7 @@ export function StoreScreen() {
               }}
             >
               <div style={{ fontSize: 15, fontWeight: 800, lineHeight: 1.45, marginBottom: 4 }}>
-                여돌이의 7월 회고,
+                서준이의 7월 회고,
                 <br />
                 책으로 남길까요?
               </div>

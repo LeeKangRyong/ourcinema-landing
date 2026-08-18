@@ -6,24 +6,32 @@ import illustAlbum from "../assets/illust/album.png";
 
 export function DetailGrowth() {
   return (
-    <section className="section band band--peach" id="features">
+    <section className="section band band--peach" id="growth">
       <div className="detail__panel band__inner">
         <FadeIn className="detail__content">
           <span className="badge badge--white">
             <img src={iconSns} alt="" />
-            성장 앨범
+            성장 일기
           </span>
           <h2>
-            가장 소중한 순간을
+            평소엔, 가족이 함께 쓰는
             <br />
-            영화처럼 기록하세요
+            성장 일기
           </h2>
           <p>
             아이의 첫 걸음, 처음 뱉은 말, 소중한 모든 순간을 날짜별로 자동
             정리합니다. 온 가족이 함께 실시간으로 반응을 남기고 추억을
-            공유하세요.
+            공유하세요. 이렇게 쌓인 일상의 기록이, 걱정되는 순간의 가장 정확한
+            근거가 돼요.
           </p>
-          <button className="pill-button">기록 시작하기</button>
+          <a
+            className="pill-button"
+            href="https://ourcinema-mockup.netlify.app"
+            target="_blank"
+            rel="noreferrer"
+          >
+            일기 화면 미리 보기
+          </a>
         </FadeIn>
         <FadeIn className="detail__visual" delay={0.1}>
           <div className="detail__stage">

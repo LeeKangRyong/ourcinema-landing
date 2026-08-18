@@ -11,7 +11,7 @@ export function DetailCommunity() {
         <FadeIn className="detail__content">
           <span className="badge badge--white">
             <img src={iconCommunity} alt="" />
-            커뮤니티
+            커뮤니티 · 준비 중
           </span>
           <h2>
             혼자가 아니에요,
@@ -19,10 +19,10 @@ export function DetailCommunity() {
             함께 키워요
           </h2>
           <p>
-            대한민국 부모라면 누구나 함께 모여 서로의 꿀팁을 공유. 선배들의
-            꿀팁을 전수받고 동기들과 소통해요.
+            월령이 비슷한 동기 부모들과 서로의 꿀팁을 나누는 공간을 준비하고
+            있어요. 선배들의 경험을 전수받고 동기들과 소통해요.
           </p>
-          <button className="pill-button">커뮤니티 구경하기</button>
+          <span className="soon-note">✏️ 정식 오픈과 함께 열려요</span>
         </FadeIn>
         <FadeIn className="detail__visual" delay={0.1}>
           <div className="detail__stage detail__stage--single">

@@ -1,7 +1,8 @@
 import { FadeIn } from "../components/FadeIn";
 import illustMascot from "../assets/illust/mascot.png";
 import illustFamily from "../assets/illust/family.png";
-import illustGift from "../assets/illust/gift.png";
+
+const MOCKUP_URL = "https://ourcinema-mockup.netlify.app";
 
 export function CtaSection() {
   return (
@@ -14,15 +15,25 @@ export function CtaSection() {
           className="sticker sticker--md float-slow cta-band__mascot"
         />
         <h2>
-          새로운 행복을 위한 설렘,
+          걱정되는 순간의 아워시네마,
           <br />
-          아워시네마
+          지금 바로 만나보세요
         </h2>
-        <p>대한민국 부모라면 누구나 사용하는 앱. 지금 바로 시작해보세요.</p>
-        <button className="cta__button">아워시네마 다운로드</button>
+        <p>
+          가입 없이 브라우저에서 걱정 살펴보기를 처음부터 끝까지 체험할 수
+          있어요.
+        </p>
+        <a
+          className="cta__button"
+          href={MOCKUP_URL}
+          target="_blank"
+          rel="noreferrer"
+        >
+          🎬 지금 체험해보기
+        </a>
         <div className="cta-band__gift">
-          <img src={illustGift} alt="" />
-          <span>지금 시작하면 웰컴 기프트 박스를 드려요</span>
+          <span className="cta-band__gift-icon">🔒</span>
+          <span>체험용 데모예요 — 실제 가입·결제는 없어요</span>
         </div>
         <img
           src={illustFamily}
