@@ -21,15 +21,7 @@ export function Footer() {
           <h4>고객 지원</h4>
           <ul>
             <li>일반 문의: help@ourcinema.kr</li>
-            <li>
-              <a
-                href="https://ourcinema-mockup.netlify.app"
-                target="_blank"
-                rel="noreferrer"
-              >
-                아워시네마 미리 체험하기
-              </a>
-            </li>
+            <li>제휴 문의: partner@ourcinema.kr</li>
           </ul>
         </div>
         <div className="footer__col">
