@@ -13,6 +13,9 @@ import g4 from "../assets/mockup/g4.jpg";
 import g5 from "../assets/mockup/g5.jpg";
 import g6 from "../assets/mockup/g6.jpg";
 import mascot from "../assets/mascot.png";
+import babyBear from "../assets/photos/baby3.jpg";
+import babySleep from "../assets/photos/baby5.jpg";
+import babyFeet from "../assets/photos/baby2.jpg";
 
 /* ---------------------------------------------------------------- */
 /* 레퍼런스 목업(2026-08-18 목업.html)의 실제 제품 UI를 1:1로 재현.
@@ -473,7 +476,7 @@ export function DiaryFeedScreen() {
 /* ---------------------------------------------------------------- */
 /* 메인 — 앨범 → 달력 탭 순회 */
 
-const ALBUM_CELLS = [g1, g2, g3, g4, g5, g6, g3, g1, g4];
+const ALBUM_CELLS = [g1, g2, g3, g4, g5, g6, babyBear, babySleep, babyFeet];
 
 function AlbumSeg() {
   const { frame, fps } = useAnim();
