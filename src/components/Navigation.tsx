@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import logo from "../assets/logo.svg";
+import logo from "../assets/mascot.png";
 
 /** 스크롤 방향/위치에 따라 내비 상태를 계산하는 훅 (Headroom 패턴)
  *  - 최상단(24px 미만): 배경 투명, 히어로 위에 얹힘
