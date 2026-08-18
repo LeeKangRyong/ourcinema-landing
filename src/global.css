@@ -31,8 +31,9 @@
 
 html {
   scroll-behavior: smooth;
-  /* 앵커 이동·포커스 스크롤 시 고정 헤더에 가려지지 않게 */
-  scroll-padding-top: 64px;
+  /* 스크롤을 멈추면 항상 섹션 경계에 정렬. 섹션이 화면보다 길어지면
+     스펙상 스냅 영역 내부는 자유 스크롤이라 갇히지 않는다 */
+  scroll-snap-type: y mandatory;
 }
 
 body {
@@ -70,12 +71,14 @@ img {
 /* ---------- Layout primitives ---------- */
 
 .section {
-  min-height: 800px;
+  /* 한 섹션 = 한 화면. 스냅 지점이 화면 단위와 일치하도록 */
+  min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 96px 48px;
-  scroll-margin-top: 64px;
+  scroll-snap-align: start;
 }
 
 .panel {
@@ -166,6 +169,7 @@ img {
   display: flex;
   align-items: center;
   overflow: hidden;
+  scroll-snap-align: start;
   /* 하단 패딩 > 상단: 콘텐츠를 광학 중심(수학적 중앙보다 살짝 위)에 */
   padding: 130px 48px 160px;
   background: #ffe9db;
@@ -1063,6 +1067,8 @@ img {
   display: flex;
   flex-direction: column;
   gap: 64px;
+  /* mandatory 스냅에서도 페이지 맨 아래(푸터)까지 도달 가능하게 */
+  scroll-snap-align: end;
 }
 
 .footer__grid {
