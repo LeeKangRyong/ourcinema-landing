@@ -247,14 +247,20 @@ img {
   );
 }
 
+/* 하단은 페이지 배경색으로 완전히 풀어 다음 밴드와 이음새 없이 연결 */
 .hero__scrim::after {
   content: "";
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
-  height: 26%;
-  background: linear-gradient(180deg, transparent, rgba(255, 238, 226, 0.75));
+  height: 32%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 248, 245, 0) 0%,
+    rgba(255, 248, 245, 0.55) 55%,
+    var(--bg) 100%
+  );
 }
 
 
