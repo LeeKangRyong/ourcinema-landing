@@ -1158,6 +1158,14 @@ img {
   .detail__panel {
     flex-direction: column;
   }
+  /* 세로 배치에선 섹션마다 다른 DOM 순서와 무관하게
+     항상 글 → 이미지 순으로 통일한다 */
+  .detail__content {
+    order: 1;
+  }
+  .detail__visual {
+    order: 2;
+  }
   .hero {
     min-height: auto;
     padding: 130px 32px 90px;
